@@ -16,11 +16,15 @@ xmms_ipc_client_init (const char *path)
 	url = parse_url (path);
 	x_return_val_if_fail (url, NULL);
 
+#ifdef EMSCRIPTEN
+	transport = xmms_ipc_tcp_client_init (url, url->ipv6_host);
+#else
 	if (!strcasecmp (url->protocol, "") || !strcasecmp (url->protocol, "unix")) {
 		transport = xmms_ipc_usocket_client_init (url);
 	} else if (!strcasecmp (url->protocol, "tcp")) {
 		transport = xmms_ipc_tcp_client_init (url, url->ipv6_host);
 	}
+#endif
 
 	free_url (url);
 	return transport;

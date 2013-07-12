@@ -122,7 +122,7 @@ xmmsc_init (const char *clientname)
 	return xmmsc_ref (c);
 }
 
-static xmmsc_result_t *
+xmmsc_result_t *
 xmmsc_send_hello (xmmsc_connection_t *c)
 {
 	const int protocol_version = XMMS_IPC_PROTOCOL_VERSION;
@@ -179,6 +179,8 @@ xmmsc_connect (xmmsc_connection_t *c, const char *ipcpath)
 	}
 
 	c->ipc = ipc;
+
+#ifndef EMSCRIPTEN
 	result = xmmsc_send_hello (c);
 	xmmsc_result_wait (result);
 	value = xmmsc_result_get_value (result);
@@ -191,6 +193,7 @@ xmmsc_connect (xmmsc_connection_t *c, const char *ipcpath)
 		xmmsv_get_int64 (value, &c->id);
 	}
 	xmmsc_result_unref (result);
+#endif
 	return true;
 }
 

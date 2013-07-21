@@ -518,7 +518,7 @@ vim:expandtab
 
         <broadcast>
             <id>0</id>
-            <name>playlist_changed</name>
+            <name>changed</name>
             <documentation>This broadcast is triggered when the playlist changes.</documentation>
 
             <return_value>

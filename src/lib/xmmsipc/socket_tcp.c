@@ -90,7 +90,7 @@ xmms_ipc_tcp_client_init (const xmms_url_t *url, int ipv6)
 	}
 
 	for (addrinfo = addrinfos; addrinfo; addrinfo = addrinfo->ai_next) {
-		int _reuseaddr = 1;
+		int _reuseaddr = 1, connected = 0;
 		const char* reuseaddr = (const char*)&_reuseaddr;
 
 		fd = socket (addrinfo->ai_family, addrinfo->ai_socktype, addrinfo->ai_protocol);
@@ -100,7 +100,14 @@ xmms_ipc_tcp_client_init (const xmms_url_t *url, int ipv6)
 
 		setsockopt (fd, SOL_SOCKET, SO_REUSEADDR, reuseaddr, sizeof (_reuseaddr));
 
-		if (connect (fd, addrinfo->ai_addr, addrinfo->ai_addrlen) == 0) {
+		connected = connect (fd, addrinfo->ai_addr, addrinfo->ai_addrlen);
+#ifndef EMSCRIPTEN
+		connected = (connected == 0);
+#else
+		connected = (connected == -1 && xmms_socket_errno() == EINPROGRESS);
+#endif
+
+		if (connected) {
 			break;
 		}
 

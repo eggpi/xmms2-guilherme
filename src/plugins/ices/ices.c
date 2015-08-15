@@ -67,12 +67,12 @@ xmms_ices_send_shout (xmms_ices_data_t *data, xmms_error_t *err)
 		if (shout_send (data->shout, og.header, og.header_len) < 0) {
 			if (err)
 				xmms_error_set (err, XMMS_ERROR_GENERIC,
-				                "Disconnected or something.");
+				                shout_get_error (data->shout));
 			return;
 		} else if (shout_send (data->shout, og.body, og.body_len) < 0) {
 			if (err)
 				xmms_error_set (err, XMMS_ERROR_GENERIC,
-				                "Error when sending data to icecast server");
+				                shout_get_error (data->shout));
 			return;
 		}
 

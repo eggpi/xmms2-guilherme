@@ -19,6 +19,7 @@
 #define _XMMS_OUTPUTPLUGIN_INT_H_
 
 #include <xmms/xmms_outputplugin.h>
+#include <xmmspriv/xmms_output.h>
 #include <xmmspriv/xmms_plugin.h>
 
 xmms_plugin_t *xmms_output_plugin_new (void);

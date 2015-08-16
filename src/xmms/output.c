@@ -149,6 +149,12 @@ struct xmms_output_St {
 	 */
 	gint32 buffer_underruns;
 
+	/**
+	 * How many bytes to read from the chain into the output buffer, and
+	 * how many bytes to read from the buffer to the output plugin.
+	 */
+	guint64 read_size;
+
 	GThread *monitor_volume_thread;
 	gboolean monitor_volume_running;
 };
@@ -175,6 +181,12 @@ xmms_output_private_data_set (xmms_output_t *output, gpointer data)
 	g_return_if_fail (output->plugin);
 
 	output->plugin_data = data;
+}
+
+guint64
+xmms_output_read_size_get (xmms_output_t *output)
+{
+	return output->read_size;
 }
 
 void
@@ -371,7 +383,7 @@ xmms_output_filler (void *arg)
 	xmms_output_t *output = (xmms_output_t *)arg;
 	xmms_xform_t *chain = NULL;
 	gboolean last_was_kill = FALSE;
-	char buf[4096];
+	char buf[output->read_size];
 	xmms_error_t err;
 	gint ret;
 
@@ -953,6 +965,10 @@ xmms_output_new (xmms_output_plugin_t *plugin, xmms_playlist_t *playlist, xmms_m
 	prop = xmms_config_property_register ("output.buffersize", "32768", NULL, NULL);
 	size = xmms_config_property_get_int (prop);
 	XMMS_DBG ("Using buffersize %d", size);
+
+	prop = xmms_config_property_register ("output.read_size", "4096", NULL, NULL);
+	output->read_size = xmms_config_property_get_int (prop);
+	XMMS_DBG ("Using read size %d", output->read_size);
 
 	g_mutex_init (&output->filler_mutex);
 	output->filler_state = FILLER_STOP;

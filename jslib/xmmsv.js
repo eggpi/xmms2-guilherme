@@ -154,13 +154,26 @@ var js_to_xv_converters = {
   'Collection': function(jscoll) {
     var pxcoll = _xmmsv_new_coll(jscoll.type);
 
-    var pxattr = xmmsv_from_jsobj(jscoll.attributes);
-    _xmmsv_coll_attributes_set(pxcoll, pxattr);
-    _xmmsv_unref(pxattr);
+    if (jscoll.attributes) {
+      var pxattr = xmmsv_from_jsobj(jscoll.attributes);
+      _xmmsv_coll_attributes_set(pxcoll, pxattr);
+      _xmmsv_unref(pxattr);
+    }
 
-    var pxop = xmmsv_from_jsobj(jscoll.operands);
-    _xmmsv_coll_operands_set(pxcoll, pxop);
-    _xmmsv_unref(pxop);
+    if (jscoll.operands) {
+      var pxop = xmmsv_from_jsobj(jscoll.operands);
+      _xmmsv_coll_operands_set(pxcoll, pxop);
+      _xmmsv_unref(pxop);
+    }
+
+    if (jscoll.ordering) {
+      var pxorder = xmmsv_from_jsobj(jscoll.ordering);
+      var pxordered = _xmmsv_coll_add_order_operators(pxcoll, pxorder);
+      _xmmsv_unref(pxcoll);
+      _xmmsv_unref(pxorder);
+
+      pxcoll = pxordered;
+    }
 
     return pxcoll;
   }

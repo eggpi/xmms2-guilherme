@@ -534,5 +534,11 @@ function XMMS2(client_name) {
 	  var res = Module.ccall('xmmsc_playlist_clear', 'number', ['number', 'number'], [_xc, playlist]);
 	  return promise_from_result(res);
 	}
+
+	this.disconnect = function() {
+	  Module.ccall('xmmsc_unref', null, ['number'], [_xc]);
+	  _xmmsc_mainloop_emscripten_deinit();
+	  _xc = null;
+	}
 }
 xmmsclient.XMMS2 = XMMS2

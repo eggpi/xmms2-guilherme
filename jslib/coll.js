@@ -5,6 +5,7 @@ function Collection(type, operands, attributes) {
   this.type = type;
   this.operands = operands ? operands : [];
   this.attributes = attributes ? attributes : {};
+  this.ordering = [];
 }
 
 Collection.prototype.attr = function coll_attr(key, value) {
@@ -14,6 +15,11 @@ Collection.prototype.attr = function coll_attr(key, value) {
 
 Collection.prototype.op = function coll_op(operand) {
   this.operands.push(operand);
+  return this;
+}
+
+Collection.prototype.order = function coll_order(order) {
+  this.ordering = order;
   return this;
 }
 

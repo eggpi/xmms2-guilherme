@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <title>HTML5 XMMS2 client</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="lib/brick-1.0.0/brick-1.0.0.byob.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <script type="text/javascript" src="../jslib/build/xmmsclient.js"></script>
+    <script type="text/javascript" src="playlist.js"></script>
+    <script type="text/javascript" src="tracklistview.js"></script>
+    <script type="text/javascript" src="client.js"></script>
+    <script type="text/javascript" src="lib/hammer.min.js"></script>
+    <script type="text/javascript" src="lib/brick-1.0.0/brick-1.0.0.byob.min.js"></script>
+
+    <div id="disconnected-banner" class="hidden">
+      Uh-oh, we've lost connection with the server! Trying to reconnect...
+    </div>
+
+    <form id="connect">
+      <label for="server-address">Server address:</label>
+      <input id="server-address" type="text"></input>
+      <button id="launch-button">Launch!</button>
+    </form>
+
+    <div id="client">
+      <x-deck id="cards" transition-type="slide-left" selected-index="0">
+        <x-card id="playlist-card" class="panel" show>
+          <table id="playlist" class="tracklist"></table>
+          <div id="playlist-controls" class="card-controls">
+            <button id="clear-playlist-button">Clear</button>
+          </div>
+        </x-card>
+
+        <x-card id="search-card" class="panel hidden">
+          <table id="search-results" class="tracklist"></table>
+          <div id="search-controls" class="card-controls">
+            <form id="search-form">
+              <input id="search-input" type="text"/>
+              <button id="search-button">Search!</button>
+            </form>
+            <button id="enqueue-search">Enqueue search results</button>
+          </div>
+        </x-card>
+      </x-deck>
+
+      <div id="controls">
+        <div id="button-controls">
+          <button id="play-button">Play</button>
+          <button id="pause-button">Pause</button>
+          <button id="stop-button">Stop</button>
+          <button id="prev-button">Previous</button>
+          <button id="next-button">Next</button>
+        </div>
+        <div id="more-controls">
+          <input id="seek-slider" type="range" step=1/>
+          <input id="volume-slider" type="range" step=1 min=0 max=100/>
+        </div>
+      </div>
+      <audio id="speaker"></audio>
+    </div>
+
+    <script type="text/javascript">
+      document.addEventListener('DOMComponentsLoaded', function() {
+        var connect_form = document.getElementById("connect");
+        connect_form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            var server_address = document.getElementById("server-address");
+            if (server_address.value) {
+              main(server_address.value);
+            }
+        });
+      });
+    </script>
+  </body>
+</html>

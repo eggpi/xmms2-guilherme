@@ -1,0 +1,145 @@
+html {
+  height: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  background-color: black;
+}
+
+#client {
+  display: none;
+}
+
+#connect.connected {
+  display: none;
+}
+
+#client.connected {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tracklist {
+  width: 80%;
+  margin: auto;
+}
+
+#cards {
+  height: 87%;
+}
+
+#playlist .active {
+  font-weight: bold;
+}
+
+input[type="range"]::-moz-range-thumb {
+  border-radius: 10px;
+  background: gray;
+  width: 14%;
+}
+
+#more-controls > input[type="range"] {
+  width: 18%;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 10px;
+  background: gray;
+  opacity: 0.3;
+  border-radius: 10px;
+  height: 100%;
+}
+
+.panel-controls {
+  width: 100%;
+  margin: auto;
+  position: relative;
+}
+
+.panel-controls * {
+  display: inline;
+}
+
+.hidden {
+  display: none;
+}
+
+#playlist-card, #search-card {
+  overflow-y: auto;
+}
+
+#controls {
+  text-align: center;
+  width: 100%;
+  background-color: black;
+  height: 20%;
+  position: fixed;
+  top: 87%;
+  padding: 1% 0;
+  left: 0;
+  z-index: 99;
+  transition: top 0.2s linear;
+}
+
+#button-controls, #more-controls {
+  height: 50%;
+}
+
+#button-controls {
+  padding-bottom: 1%;
+}
+
+#controls.expanded {
+  top: 78%;
+}
+
+#button-controls > button {
+  border-radius: 10px;
+  border: 1% solid gray;
+  background-color: black;
+  color: white;
+  width: 12%;
+  height: 100%;
+}
+
+#playlist-card {
+  background-color: lightgreen;
+}
+
+#search-card {
+  background-color: lightblue;
+}
+
+.hoverIndicator {
+  width: 2px;
+  visibility: hidden;
+}
+
+.hover {
+  background-color: black;
+  visibility: visible;
+}
+
+.track td {
+  font-size: large;
+  text-align: center;
+}
+
+.tracklistButton {
+  padding: 0 10px;
+}
+
+td, button {
+  cursor: pointer;
+}
+
+#disconnected-banner {
+  width: 100%;
+  background-color: #E75757;
+  text-align: center;
+  padding: 2px;
+}

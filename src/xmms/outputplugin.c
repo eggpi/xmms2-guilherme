@@ -387,7 +387,6 @@ xmms_output_plugin_writer (gpointer data)
 {
 	xmms_output_plugin_t *plugin = (xmms_output_plugin_t *) data;
 	xmms_output_t *output = NULL;
-	gchar buffer[4096];
 	gint ret;
 
 	g_mutex_lock (&plugin->write_mutex);
@@ -450,7 +449,8 @@ xmms_output_plugin_writer (gpointer data)
 
 			g_mutex_unlock (&plugin->write_mutex);
 
-			ret = xmms_output_read (output, buffer, 4096);
+			gchar buffer[xmms_output_read_size_get (output)];
+			ret = xmms_output_read (output, buffer, sizeof(buffer));
 			if (ret > 0) {
 				xmms_error_t err;
 

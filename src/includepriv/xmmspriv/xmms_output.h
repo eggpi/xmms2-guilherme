@@ -40,4 +40,6 @@ guint32 xmms_output_latency (xmms_output_t *output);
 
 gboolean xmms_output_plugin_switch (xmms_output_t *output, xmms_output_plugin_t *new_plugin);
 
+guint64 xmms_output_read_size_get (xmms_output_t *output);
+
 #endif

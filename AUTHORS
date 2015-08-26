@@ -158,6 +158,10 @@ E: guilherme.p.gonc@gmail.com
 D: nycli fixes
 D: Service Clients (Summer of Code 2011)
 
+N: Google Inc.
+E: *@google.com
+D: Various contributions by Google employees
+
 N: Dries Harnie
 E: dries@harnie.be
 D: Status aware CLI

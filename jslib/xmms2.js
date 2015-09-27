@@ -540,5 +540,9 @@ function XMMS2(client_name) {
 	  _xmmsc_mainloop_emscripten_deinit();
 	  _xc = null;
 	}
+
+	if (window.location.protocol == "https:") {
+	  Module['websocket']['url'] = 'wss://';
+	}
 }
 xmmsclient.XMMS2 = XMMS2

@@ -44,3 +44,7 @@ this.disconnect = function() {
   _xmmsc_mainloop_emscripten_deinit();
   _xc = null;
 }
+
+if (window.location.protocol == "https:") {
+  Module['websocket']['url'] = 'wss://';
+}

@@ -222,7 +222,7 @@ init_search = make_promise(_init_search);
 function play_audio() {
   // change src to bypass caching
   var p = Math.floor(Math.random() * 10000);
-  speaker.src = "http://" + window.location.hostname + "/stream?" + p;
+  speaker.src = window.location.protocol + "//" + window.location.hostname + "/stream?" + p;
   speaker.play();
 }
 

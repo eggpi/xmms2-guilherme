@@ -220,6 +220,7 @@ function _init_search(resolver, reconnect) {
 init_search = make_promise(_init_search);
 
 function play_audio() {
+  var speaker = document.getElementById('speaker');
   // change src to bypass caching
   var p = Math.floor(Math.random() * 10000);
   speaker.src = window.location.protocol + "//" + window.location.hostname + "/stream?" + p;
@@ -228,6 +229,18 @@ function play_audio() {
 
 function _init_audio(resolver, reconnect) {
   // TODO Integrate with volume!
+  var speaker = document.getElementById('speaker');
+  speaker.addEventListener('error', function() {
+    console.log('failed to load stream, will retry if not paused!');
+    setTimeout(function() {
+      xc.playback_status().then(function(status) {
+        if (status === xmmsclient.XMMS_PLAYBACK_STATUS_PLAY) {
+          play_audio();
+        }
+      });
+    }, 500);
+  });
+
   play_audio();
   resolver.resolve();
 }

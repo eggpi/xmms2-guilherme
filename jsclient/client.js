@@ -252,11 +252,17 @@ function _init_search(resolver, reconnect) {
 init_search = make_promise(_init_search);
 
 function play_audio() {
-  var speaker = document.getElementById('speaker');
-  // change src to bypass caching
-  var p = Math.floor(Math.random() * 10000);
-  speaker.src = window.location.protocol + "//" + window.location.hostname + "/stream?" + p;
-  speaker.play();
+  // FIXME For some reason, Firefox will fail to decode the stream if
+  // we start fetching it right after it is created. Use an arbitrary
+  // delay as a workaround until that gets fixed.
+  setTimeout(function() {
+    var speaker = document.getElementById('speaker');
+    // change src to bypass caching
+    var p = Math.floor(Math.random() * 10000);
+    speaker.src = window.location.protocol + "//" +
+      window.location.hostname + "/stream?" + p;
+    speaker.play();
+  }, 800);
 }
 
 function _init_audio(resolver, reconnect) {

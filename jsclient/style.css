@@ -143,3 +143,11 @@ td, button {
   text-align: center;
   padding: 2px;
 }
+
+#log {
+  padding: 2%;
+  overflow-y: scroll;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+}

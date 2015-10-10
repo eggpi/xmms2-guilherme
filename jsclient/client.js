@@ -1,5 +1,12 @@
 var VIEW_COLUMNS = ["artist", "title", "album"];
 
+function log(message) {
+  console.log(message);
+  var log_element = document.getElementById('log');
+  log_element.innerHTML += (message + '<br/>');
+  log_element.scrollTop = log_element.scrollHeight;
+}
+
 function make_promise(fn) {
   return function() {
     var args = Array.prototype.slice.call(arguments);
@@ -385,6 +392,9 @@ function connect(xmms_path, reconnect) {
 
 function keep_alive(xmms_path) {
   setInterval(function() {
+    log('document.hasFocus: ' + document.hasFocus());
+    log('navigator.onLine: ' + navigator.onLine);
+
     if (!document.hasFocus()) {
       // Skip connection check. The browser will likely throttle the emscripten
       // event loop when unfocused, so we'd never get an answer anyway.

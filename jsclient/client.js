@@ -67,7 +67,7 @@ function _init_playlist(resolver, reconnect) {
       if (errmsg == "no current entry") {
         resolver.resolve();
       } else {
-        console.error(errmsg);
+        log(errmsg);
       }
     });
 
@@ -259,7 +259,7 @@ function _init_audio(resolver, reconnect) {
   // TODO Integrate with volume!
   var speaker = document.getElementById('speaker');
   speaker.addEventListener('error', function() {
-    console.log('failed to load stream, will retry if not paused!');
+    log('failed to load stream, will retry if not paused!');
     setTimeout(function() {
       xc.playback_status().then(function(status) {
         if (status === xmmsclient.XMMS_PLAYBACK_STATUS_PLAY) {
@@ -414,9 +414,6 @@ function connect(xmms_path, reconnect) {
 
 function keep_alive(xmms_path) {
   setInterval(function() {
-    log('document.hasFocus: ' + document.hasFocus());
-    log('navigator.onLine: ' + navigator.onLine);
-
     if (!document.hasFocus()) {
       // Skip connection check. The browser will likely throttle the emscripten
       // event loop when unfocused, so we'd never get an answer anyway.

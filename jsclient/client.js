@@ -1,6 +1,12 @@
 var VIEW_COLUMNS = ["artist", "title", "album"];
 
 function log(message) {
+  var now = new Date();
+  var timestamp = [
+      now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds()
+  ].join(':');
+  message = '(' + timestamp + ') ' + message
+
   console.log(message);
   var log_element = document.getElementById('log');
   log_element.innerHTML += (message + '<br/>');

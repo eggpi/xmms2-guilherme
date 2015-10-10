@@ -151,3 +151,10 @@ td, button {
   height: 100%;
   width: 100%;
 }
+
+#log-pause {
+  position: fixed;
+  left: 90%;
+  top: 1%;
+  font-weight: bold;
+}

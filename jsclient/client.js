@@ -9,8 +9,11 @@ function log(message) {
 
   console.log(message);
   var log_element = document.getElementById('log');
+  var log_pause_element = document.getElementById('log-pause');
   log_element.innerHTML += (message + '<br/>');
-  log_element.scrollTop = log_element.scrollHeight;
+  if (!log_pause_element.paused) {
+    log_element.scrollTop = log_element.scrollHeight;
+  }
 }
 
 function make_promise(fn) {
@@ -35,6 +38,18 @@ function flatten_propdict(propdict) {
 
   return ret;
 }
+
+function _init_log(resolver, reconnect) {
+  if (!reconnect) {
+    var log_pause_element = document.getElementById('log-pause');
+    log_pause_element.paused = false;
+    log_pause_element.addEventListener('click', function() {
+      log_pause_element.paused = !log_pause_element.paused;
+    });
+  }
+  resolver.resolve();
+}
+init_log = make_promise(_init_log);
 
 function _init_playlist(resolver, reconnect) {
   if (!reconnect) {
@@ -282,7 +297,8 @@ function on_connect(reconnect) {
     init_playback_status(reconnect),
     init_search(reconnect),
     init_audio(reconnect),
-    init_panels(reconnect)
+    init_panels(reconnect),
+    init_log(reconnect)
   ).then(function() {
     var client = document.getElementById("client");
     client.classList.add("connected");

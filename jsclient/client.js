@@ -8,9 +8,9 @@ function log(message) {
   message = '(' + timestamp + ') ' + message
 
   console.log(message);
-  var log_element = document.getElementById('log');
-  var log_pause_element = document.getElementById('log-pause');
-  log_element.innerHTML += (message + '<br/>');
+  var log_element = document.getElementById("log");
+  var log_pause_element = document.getElementById("log-pause");
+  log_element.innerHTML += (message + "<br/>");
   if (!log_pause_element.paused) {
     log_element.scrollTop = log_element.scrollHeight;
   }
@@ -41,9 +41,9 @@ function flatten_propdict(propdict) {
 
 function _init_log(resolver, reconnect) {
   if (!reconnect) {
-    var log_pause_element = document.getElementById('log-pause');
+    var log_pause_element = document.getElementById("log-pause");
     log_pause_element.paused = false;
-    log_pause_element.addEventListener('click', function() {
+    log_pause_element.addEventListener("click", function() {
       log_pause_element.paused = !log_pause_element.paused;
     });
   }

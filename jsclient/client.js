@@ -168,7 +168,11 @@ init_current_id = make_promise(_init_current_id);
 
 function _init_playback_status(resolver, reconnect) {
   xc.broadcast_playback_status(on_playback_status);
-  xc.playback_status().then(on_playback_status).then(resolver.resolve);
+  if (!reconnect) {
+    xc.playback_status().then(on_playback_status).then(resolver.resolve);
+  } else {
+    resolver.resolve();
+  }
 }
 init_playback_status = make_promise(_init_playback_status);
 
@@ -257,19 +261,20 @@ function play_audio() {
 
 function _init_audio(resolver, reconnect) {
   // TODO Integrate with volume!
-  var speaker = document.getElementById('speaker');
-  speaker.addEventListener('error', function() {
-    log('failed to load stream, will retry if not paused!');
-    setTimeout(function() {
-      xc.playback_status().then(function(status) {
-        if (status === xmmsclient.XMMS_PLAYBACK_STATUS_PLAY) {
-          play_audio();
-        }
-      });
-    }, 500);
-  });
-
-  play_audio();
+  if (!reconnect) {
+    var speaker = document.getElementById('speaker');
+    speaker.addEventListener('error', function() {
+      log('failed to load stream, will retry if not paused!');
+      setTimeout(function() {
+        xc.playback_status().then(function(status) {
+          if (status === xmmsclient.XMMS_PLAYBACK_STATUS_PLAY) {
+            play_audio();
+          }
+        });
+      }, 500);
+    });
+    play_audio();
+  }
   resolver.resolve();
 }
 init_audio = make_promise(_init_audio);
@@ -412,9 +417,13 @@ function connect(xmms_path, reconnect) {
   });
 }
 
+// When the screen goes off on a phone (at least on my phone and browser),
+// the Websocket connection is dropped and Javascript is paused, but the
+// stream continues to play normally. Thus, when we turn the screen back on,
+// we'll want to reconnect, but keep the stream.
 function keep_alive(xmms_path) {
   setInterval(function() {
-    if (!document.hasFocus()) {
+    if (!document.hasFocus() || !navigator.onLine) {
       // Skip connection check. The browser will likely throttle the emscripten
       // event loop when unfocused, so we'd never get an answer anyway.
       return;

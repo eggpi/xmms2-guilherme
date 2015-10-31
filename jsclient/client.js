@@ -263,7 +263,7 @@ function play_audio() {
     // change src to bypass caching
     var p = Math.floor(Math.random() * 10000);
     speaker.src = window.location.protocol + "//" +
-      window.location.hostname + "/stream?" + p;
+      window.location.hostname + "/stream.ogg?" + p;
     speaker.play();
   }, 800);
 }

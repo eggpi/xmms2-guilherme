@@ -274,8 +274,9 @@ function _init_audio(resolver, reconnect) {
     var speaker = document.getElementById('speaker');
     speaker.addEventListener('error', function() {
       log('failed to load stream, will retry if not paused!');
-      setTimeout(function() {
+      var retryIntervalId = setInterval(function() {
         xc.playback_status().then(function(status) {
+          clearInterval(retryIntervalId);
           if (status === xmmsclient.XMMS_PLAYBACK_STATUS_PLAY) {
             play_audio();
           }

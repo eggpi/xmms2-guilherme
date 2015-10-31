@@ -96,14 +96,17 @@ function _init_control_buttons(resolver, reconnect) {
     xc.playback_start();
   });
 
+  var speaker = document.getElementById('speaker');
   var pause = document.getElementById("pause-button");
   pause.addEventListener("click", function() {
     xc.playback_pause();
+    speaker.pause();
   });
 
   var stop = document.getElementById("stop-button");
   stop.addEventListener("click", function() {
     xc.playback_stop();
+    speaker.pause();
   });
 
   var next = document.getElementById("next-button");

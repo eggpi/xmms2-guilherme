@@ -13,6 +13,10 @@ body {
   display: none;
 }
 
+#connect {
+  color: white;
+}
+
 #connect.connected {
   display: none;
 }

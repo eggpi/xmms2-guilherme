@@ -20,11 +20,9 @@
       Uh-oh, we've lost connection with the server! Trying to reconnect...
     </div>
 
-    <form id="connect">
-      <label for="server-address">Server address:</label>
-      <input id="server-address" type="text"></input>
-      <button id="launch-button">Launch!</button>
-    </form>
+    <div id="connect">
+        <p>Please wait, connecting...</p>
+    </div>
 
     <div id="client">
       <x-deck id="cards" transition-type="slide-left" selected-index="0">
@@ -71,16 +69,10 @@
     </div>
 
     <script type="text/javascript">
-      var server_address = document.getElementById("server-address");
-      server_address.value = window.location.host + ':9996';
-      document.addEventListener('DOMComponentsLoaded', function() {
-        var connect_form = document.getElementById("connect");
-        connect_form.addEventListener("submit", function(event) {
-            event.preventDefault();
-            if (server_address.value) {
-              main(server_address.value);
-            }
-        });
+      var port = (window.location.port ||
+        (window.location.protocol === "https:" ? "443" : "80"));
+      document.addEventListener("DOMComponentsLoaded", function() {
+        main(window.location.host + ":" + port);
       });
     </script>
   </body>
